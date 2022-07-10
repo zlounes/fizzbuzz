@@ -1,0 +1,8 @@
+version: '2.2'
+services:
+  fizzbuzz:
+    image: zlounes/fizzbuzz:1.0
+    build: .
+    ports:
+      - "8080:8080"
+

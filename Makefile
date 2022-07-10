@@ -26,6 +26,17 @@ runClient:
 runTests: 
 	go test -v ./...
 
+.PHONY: buildImage
+buildImage:
+	docker build -t fizzbuzz:1.0 -f Dockerfile .
+
+.PHONY: runIT
+runIT:
+	docker-compose down
+	docker-compose up -d
+	curl -v -d "int1=$(int1)&int2=$(int2)&limit=$(limit)&string1=$(string1)&string2=$(string2)" -X POST http://localhost:8080/fizzbuzz
+	docker-compose down
+
 .PHONY: help
 help:
 	@echo 'Targets:'
@@ -33,6 +44,8 @@ help:
 	@echo '  runServer    - launch server'
 	@echo '  runClient    - call fizzbuzz server'
 	@echo '  runTests     - run unit tests'
+	@echo '  buildImage   - build docker image'
+	@echo '  runIT        - IT test on docker image'
 	@echo 'Options:'
 	@echo '  serverPort  - server port'
 	@echo '  int1        - int1 value'

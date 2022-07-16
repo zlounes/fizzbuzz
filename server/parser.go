@@ -1,4 +1,4 @@
-package handlers
+package server
 
 import (
 	"fmt"
@@ -34,6 +34,9 @@ func parseInts(req *http.Request, strKeys ...string) ([]int, error) {
 			if val, err := strconv.Atoi(strVal); err != nil {
 				return nil, fmt.Errorf("The post argument %s should be an integer", strKey)
 			} else {
+				if val <= 0 {
+					return nil, fmt.Errorf("The post argument %s should be gretaer than 0", strKey)
+				}
 				result = append(result, val)
 			}
 		}

@@ -14,16 +14,19 @@ type InputData struct {
 }
 
 type ServerConfig struct {
-	port int
+	Port int
 }
 
+func NewInputData(int1 int, int2, limit int, string1 string, string2 string) InputData {
+	return InputData{Int1: int1, Int2: int2, Limit: limit, String1: string1, String2: string2}
+}
 func RetrieveServerConfigFromCLI() ServerConfig {
 	var serverPort int
 	flag.IntVar(&serverPort, "port", 8080, "define the server listen port")
 	flag.Parse()
-	return ServerConfig{port: serverPort}
+	return ServerConfig{Port: serverPort}
 }
 
 func (serverConfig *ServerConfig) GetServerPort() string {
-	return ":" + strconv.Itoa(serverConfig.port)
+	return ":" + strconv.Itoa(serverConfig.Port)
 }

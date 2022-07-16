@@ -18,9 +18,9 @@ clean:
 runServer: build
 	./fizzbuzz -port $(serverPort)
 
-.PHONY: runClient
-runClient:
-	curl -v -d "int1=$(int1)&int2=$(int2)&limit=$(limit)&string1=$(string1)&string2=$(string2)" -X POST http://localhost:8080/fizzbuzz
+.PHONY: runCurl
+runCurl:
+	curl -v -d "int1=$(int1)&int2=$(int2)&limit=$(limit)&string1=$(string1)&string2=$(string2)" -X POST http://localhost:$(serverPort)/fizzbuzz
 
 .PHONY: runTests
 runTests: 
@@ -31,21 +31,23 @@ buildImage:
 	docker build -t fizzbuzz:1.0 -f Dockerfile .
 
 .PHONY: runIT
-runIT:
+runIT: export SERVER_PORT = $(serverPort)
+runIT: 
 	docker-compose down
+	docker-compose build
 	docker-compose up -d
-	curl -v -d "int1=$(int1)&int2=$(int2)&limit=$(limit)&string1=$(string1)&string2=$(string2)" -X POST http://localhost:8080/fizzbuzz
+	go test -v ./server_test.go -tags=integration
 	docker-compose down
 
 .PHONY: help
 help:
 	@echo 'Targets:'
 	@echo '  build        - build fizzbuzz executable'
-	@echo '  runServer    - launch server'
-	@echo '  runClient    - call fizzbuzz server'
+	@echo '  runServer    - launch local server'
+	@echo '  runCurl      - use curl to call local server'
 	@echo '  runTests     - run unit tests'
 	@echo '  buildImage   - build docker image'
-	@echo '  runIT        - IT test on docker image'
+	@echo '  runIT        - run integration test on the docker image'
 	@echo 'Options:'
 	@echo '  serverPort  - server port'
 	@echo '  int1        - int1 value'

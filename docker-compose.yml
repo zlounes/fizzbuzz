@@ -4,5 +4,7 @@ services:
     image: zlounes/fizzbuzz:1.0
     build: .
     ports:
-      - "8080:8080"
+      - "${SERVER_PORT}:${SERVER_PORT}"
+    environment:
+      - SERVER_PORT=${SERVER_PORT}
 

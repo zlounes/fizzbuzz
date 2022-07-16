@@ -9,7 +9,7 @@ Use *make help* for listing all available commands.
 without make :  
 > go run ./ -port 8080  
 
-you can hen use http://localhost:8080/fizzbuzz for testing fizzbuzz
+you can then use http://localhost:8080/fizzbuzz for testing fizzbuzz
 and http://localhost:8080/fizzbuzz/stat for displaying the more used entry.
 
 ## generate binary fizzbuzz on local folder

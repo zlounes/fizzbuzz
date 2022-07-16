@@ -1,9 +1,9 @@
 
-## FizzBuzz implementation in Rest Calls
+# FizzBuzz implementation in Rest Calls
 
 Use *make help* for listing all available commands.    
 
-# Launch server on localhost:8080
+## Launch server on localhost:8080
 > make runServer -serverPort=8080  
 
 without make :  
@@ -12,14 +12,14 @@ without make :
 you can hen use http://localhost:8080/fizzbuzz for testing fizzbuzz
 and http://localhost:8080/fizzbuzz/stat for displaying the more used entry.
 
-# generate binary fizzbuzz on local folder
+## generate binary fizzbuzz on local folder
 > make build  
 
 the executable fizzbuzz could also be launch with option -port XXXX  
-# REST API
+## REST API
 
 ```
-    /fizzbuzz   
+-    /fizzbuzz   
       POST  
         input
           content-type : application/x-www-form-urlencoded  
@@ -33,10 +33,15 @@ the executable fizzbuzz could also be launch with option -port XXXX
           status :
             200 : OK
             content-type : text/plain; charset=utf-8  
-            body:
+            body :
               fizzbuzz result 
-            
-    /fizzbuzz/stat  
+      GET
+        output
+          content-type : text/html
+          body : 
+            form to input fizzbuzz calculation     
+
+-    /fizzbuzz/stat  
       GET  
         output  
           content-type : application/json; charset=utf-8  
@@ -51,10 +56,10 @@ the executable fizzbuzz could also be launch with option -port XXXX
                 "NbCalls":int}
 ```
 
-# Run unit tests
+## Run unit tests
 >make runTests
 
-# Docker Image
+## Docker Image
 build the image zlounes/fizzbuzz:1.0 : 
 >make buildImage
 

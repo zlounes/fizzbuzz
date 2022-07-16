@@ -12,7 +12,7 @@ import (
 )
 
 var (
-	inputData = InputData{
+	inputData = FizzBuzzInput{
 		Int1:    3,
 		Int2:    5,
 		Limit:   30,
@@ -68,7 +68,7 @@ func TestGet(t *testing.T) {
 	}
 }
 
-func sendFizzBuzz(inputData InputData, server FizzBuzzServer) (http.ResponseWriter, int, string) {
+func sendFizzBuzz(inputData FizzBuzzInput, server FizzBuzzServer) (http.ResponseWriter, int, string) {
 	data := testutil.BuildFormValues(inputData)
 	req, _ := http.NewRequest("POST", "/fizzbuzz", strings.NewReader(data.Encode()))
 	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")

@@ -9,20 +9,20 @@ const (
 )
 
 type BestHint struct {
-	Entry   config.InputData
+	Entry   config.FizzBuzzInput
 	NbCalls int
 }
 
 type FizzbuzzStat struct {
-	mapStatItems     map[config.InputData]int
-	channelInputStat <-chan config.InputData
+	mapStatItems     map[config.FizzBuzzInput]int
+	channelInputStat <-chan config.FizzBuzzInput
 	channelCheckStat <-chan chan BestHint
 	channelClose     chan bool
 	bestHint         BestHint
 }
 
-func NewFizzbuzzStat(channelInputStat <-chan config.InputData, channelCheckStat <-chan chan BestHint) *FizzbuzzStat {
-	mapStatItems := make(map[config.InputData]int)
+func NewFizzbuzzStat(channelInputStat <-chan config.FizzBuzzInput, channelCheckStat <-chan chan BestHint) *FizzbuzzStat {
+	mapStatItems := make(map[config.FizzBuzzInput]int)
 	channelClose := make(chan bool)
 	result := &FizzbuzzStat{mapStatItems: mapStatItems, channelInputStat: channelInputStat,
 		channelCheckStat: channelCheckStat, channelClose: channelClose}
@@ -44,7 +44,7 @@ func (fizzbuzzStat *FizzbuzzStat) run() {
 	}
 }
 
-func (fizzbuzzStat *FizzbuzzStat) addNewInput(inputData config.InputData) int {
+func (fizzbuzzStat *FizzbuzzStat) addNewInput(inputData config.FizzBuzzInput) int {
 	if statItemCount, ok := fizzbuzzStat.mapStatItems[inputData]; !ok {
 		fizzbuzzStat.mapStatItems[inputData] = 1
 		return 1
@@ -55,7 +55,7 @@ func (fizzbuzzStat *FizzbuzzStat) addNewInput(inputData config.InputData) int {
 	}
 }
 
-func (fizzbuzzStat *FizzbuzzStat) checkBestHint(inputData config.InputData, nbHints int) {
+func (fizzbuzzStat *FizzbuzzStat) checkBestHint(inputData config.FizzBuzzInput, nbHints int) {
 	if fizzbuzzStat.bestHint.NbCalls < nbHints {
 		fizzbuzzStat.bestHint.NbCalls = nbHints
 		fizzbuzzStat.bestHint.Entry = inputData

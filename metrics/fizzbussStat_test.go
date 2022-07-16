@@ -9,7 +9,7 @@ import (
 
 func TestStat(t *testing.T) {
 	a := assert.New(t)
-	channelInputStat := make(chan config.InputData)
+	channelInputStat := make(chan config.FizzBuzzInput)
 	channelCheckStat := make(chan chan BestHint)
 	stat := NewFizzbuzzStat(channelInputStat, channelCheckStat)
 	channelInputStat <- config.NewInputData(1, 2, 3, "fizz", "buzz")

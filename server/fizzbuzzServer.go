@@ -20,14 +20,14 @@ type FizzBuzzServer struct {
 	server           *http.Server
 	serverMux        *http.ServeMux
 	stat             *metrics.FizzbuzzStat
-	channelInputStat chan<- InputData
+	channelInputStat chan<- FizzBuzzInput
 	channelCheckStat chan<- chan metrics.BestHint
 }
 
 //Accept a ServerConfig for defining the port
 //dont start to listent on socket until Run() is called
 func NewServer(serverConfig ServerConfig) *FizzBuzzServer {
-	channelInputStat := make(chan config.InputData)
+	channelInputStat := make(chan config.FizzBuzzInput)
 	channelCheckStat := make(chan chan metrics.BestHint)
 	stat := metrics.NewFizzbuzzStat(channelInputStat, channelCheckStat)
 	m := http.NewServeMux()

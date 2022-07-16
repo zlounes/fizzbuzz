@@ -8,7 +8,7 @@ import (
 	. "github.com/zlounes/fizzbuzz/config"
 )
 
-func parseForm(req *http.Request) (*InputData, error) {
+func parseForm(req *http.Request) (*FizzBuzzInput, error) {
 	var intVals []int
 	var strVals []string
 	var err error
@@ -21,7 +21,7 @@ func parseForm(req *http.Request) (*InputData, error) {
 	if strVals, err = parseStrings(req, "string1", "string2"); err != nil {
 		return nil, err
 	}
-	return &InputData{Int1: intVals[0], Int2: intVals[1], Limit: intVals[2],
+	return &FizzBuzzInput{Int1: intVals[0], Int2: intVals[1], Limit: intVals[2],
 		String1: strVals[0], String2: strVals[1]}, nil
 }
 

@@ -52,7 +52,7 @@ func ReadResult(resp http.Response) (string, error) {
 	return string(b), nil
 }
 
-func BuildFormValues(inputData config.InputData) url.Values {
+func BuildFormValues(inputData config.FizzBuzzInput) url.Values {
 	data := url.Values{}
 	data.Add("int1", strconv.Itoa(inputData.Int1))
 	data.Add("int2", strconv.Itoa(inputData.Int2))

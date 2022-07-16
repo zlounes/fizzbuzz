@@ -10,7 +10,7 @@ type ExpectedResult struct {
 }
 
 func TestCalculator(t *testing.T) {
-	inputData := InputData{
+	inputData := FizzBuzzInput{
 		Int1:    3,
 		Int2:    5,
 		Limit:   30,

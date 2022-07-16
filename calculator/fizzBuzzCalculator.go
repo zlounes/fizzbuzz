@@ -12,7 +12,7 @@ var (
 	SEPARATOR = ","
 )
 
-func CalculateFizzBuzz(inputData InputData) string {
+func CalculateFizzBuzz(inputData FizzBuzzInput) string {
 	var sb strings.Builder
 	var concatenedStrings = fmt.Sprintf("%s%s", inputData.String1, inputData.String2)
 	for i := 1; i <= inputData.Limit; i++ {
@@ -24,7 +24,7 @@ func CalculateFizzBuzz(inputData InputData) string {
 	return sb.String()
 }
 
-func calculateIndex(index int, inputData InputData, concatenedStrings string) string {
+func calculateIndex(index int, inputData FizzBuzzInput, concatenedStrings string) string {
 	var result string
 	fizz := (index % inputData.Int1) == 0
 	buzz := (index % inputData.Int2) == 0

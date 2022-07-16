@@ -26,7 +26,7 @@ const (
 
 type fizzBuzzHandler struct {
 	http.Handler
-	channelInputStat chan<- InputData
+	channelInputStat chan<- FizzBuzzInput
 }
 
 //HAnle the fiizbuzz post call returning text content and GET returing the fom
@@ -42,7 +42,7 @@ func (handler *fizzBuzzHandler) ServeHTTP(w http.ResponseWriter, req *http.Reque
 }
 
 func (handler *fizzBuzzHandler) processFizzBuzzRequest(w http.ResponseWriter, req *http.Request) {
-	var inputData *InputData
+	var inputData *FizzBuzzInput
 	var err error
 	if inputData, err = parseForm(req); err != nil {
 		returnError(w, http.StatusBadRequest, err)

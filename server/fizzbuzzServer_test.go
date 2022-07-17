@@ -1,46 +1,29 @@
 package server
 
 import (
-	"encoding/json"
 	"net/http"
 	"strings"
 	"testing"
 
 	. "github.com/zlounes/fizzbuzz/config"
-	"github.com/zlounes/fizzbuzz/metrics"
 	"github.com/zlounes/fizzbuzz/testutil"
 )
 
-var (
-	inputData = FizzBuzzInput{
-		Int1:    3,
-		Int2:    5,
-		Limit:   30,
-		String1: "fizz",
-		String2: "buzz",
-	}
-)
-
 func TestPost(t *testing.T) {
-	expectedResult := "1,2,fizz,4,buzz,fizz,7,8,fizz,buzz,11,fizz,13,14,fizzbuzz,16,17,fizz,19,buzz,fizz,22,23,fizz,buzz,26,fizz,28,29,fizzbuzz"
 	server := NewServer(ServerConfig{Port: 7878})
 	defer server.Stop()
-	w, _, result := sendFizzBuzz(inputData, *server)
-	//status could be tested here because managed in the http.resonse
-	if w.Header().Get("Content-Type") != "text/plain; charset=utf-8" {
-		t.Logf("Unexpected post content-type output : %v", w.Header().Get("Content-Type"))
+	_, _, result := sendFizzBuzz(testutil.TestFizzBuzzInput, *server)
+	//status and contet-type could be tested here because managed in the http.resonse
+	if result != testutil.TestExpectedResult {
 		t.Fail()
-	}
-	if result != expectedResult {
-		t.Fail()
-		t.Logf("Unexpected fizzbuzz result, expecting %v received %v", expectedResult, result)
+		t.Logf("Unexpected fizzbuzz result, expecting %v received %v", testutil.TestExpectedResult, result)
 	}
 }
 
 func TestGet(t *testing.T) {
 	server := NewServer(ServerConfig{Port: 7878})
 	defer server.Stop()
-	sendFizzBuzz(inputData, *server)
+	sendFizzBuzz(testutil.TestFizzBuzzInput, *server)
 	req, _ := http.NewRequest("GET", "/fizzbuzz/stat", nil)
 	w := testutil.NewResponseMock()
 	server.ServeHTTP(w, req)
@@ -49,11 +32,8 @@ func TestGet(t *testing.T) {
 		t.Fail()
 		return
 	}
-	bestHint := metrics.BestHint{}
-	decoder := json.NewDecoder(strings.NewReader(w.GetResult()))
-	if err := decoder.Decode(&bestHint); err != nil {
-		t.Fail()
-		t.Logf("Could not decode the result :  %v", err)
+	bestHint := testutil.DecodeJson(w.GetResult(), t)
+	if bestHint == nil {
 		return
 	}
 	if bestHint.NbCalls != 1 {
@@ -62,9 +42,9 @@ func TestGet(t *testing.T) {
 		return
 	}
 	entry := bestHint.Entry
-	if entry != inputData {
+	if entry != testutil.TestFizzBuzzInput {
 		t.Fail()
-		t.Logf("unexpected result, expected %v received :  %v", inputData, entry)
+		t.Logf("unexpected result, expected %v received :  %v", testutil.TestFizzBuzzInput, entry)
 	}
 }
 

@@ -31,10 +31,10 @@ the executable fizzbuzz could also be launch with option -port XXXX
               string2 string  
         output
           status :
-            200 : OK
-            content-type : text/plain; charset=utf-8  
-            body :
-              fizzbuzz result 
+              200 : OK
+          content-type : text/plain; charset=utf-8  
+          body :
+            fizzbuzz result 
       GET
         output
           content-type : text/html
@@ -44,6 +44,8 @@ the executable fizzbuzz could also be launch with option -port XXXX
 -    /fizzbuzz/stat  
       GET  
         output  
+          status:
+            200 : OK
           content-type : application/json; charset=utf-8  
           json : 
             {
@@ -53,7 +55,8 @@ the executable fizzbuzz could also be launch with option -port XXXX
                 "Limit":int,
                 "String1":string,
                 "String2":string},
-                "NbCalls":int}
+              "NbCalls":int
+            }
 ```
 
 ## Run unit tests

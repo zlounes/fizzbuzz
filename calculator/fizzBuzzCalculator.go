@@ -12,6 +12,11 @@ var (
 	SEPARATOR = ","
 )
 
+//Return a string with  value from 1 to inputData.Limit, separated by comma
+//with inputData.string1 if the value is multiple of inputData.Int1
+//with inputData.string2 if multiple of inputData.Int2
+//with string1, string2 cocatened if lultiple of Int1 and Int2
+//with value in other cases
 func CalculateFizzBuzz(inputData FizzBuzzInput) string {
 	var sb strings.Builder
 	var concatenedStrings = fmt.Sprintf("%s%s", inputData.String1, inputData.String2)

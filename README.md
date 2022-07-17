@@ -15,7 +15,7 @@ and http://localhost:8080/fizzbuzz/stat for displaying the more used entry.
 ## generate binary fizzbuzz on local folder
 > make build  
 
-the executable fizzbuzz could also be launch with option -port XXXX  
+the executable fizzbuzz could be then be launched with option -port XXXX  
 ## REST API
 
 ```

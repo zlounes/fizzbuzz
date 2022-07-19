@@ -24,10 +24,10 @@ the executable fizzbuzz could be then be launched with option -port XXXX
         input
           content-type : application/x-www-form-urlencoded  
             args  
-              int1 integer  
-              int2 integer  
-              limit integer  
-              string1 string  
+              int1 integer > 0  
+              int2 integer  > 0
+              limit integer  > 0
+              string1 string
               string2 string  
         output
           status :

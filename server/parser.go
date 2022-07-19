@@ -8,6 +8,10 @@ import (
 	. "github.com/zlounes/fizzbuzz/config"
 )
 
+const (
+	MAX_STRING_LEN = 50
+)
+
 func parseForm(req *http.Request) (*FizzBuzzInput, error) {
 	var intVals []int
 	var strVals []string
@@ -27,31 +31,36 @@ func parseForm(req *http.Request) (*FizzBuzzInput, error) {
 
 func parseInts(req *http.Request, strKeys ...string) ([]int, error) {
 	result := make([]int, 0)
+	var strVal string
+	var err error
+	var val int
 	for _, strKey := range strKeys {
-		if strVal, err := parseRequiredArg(req, strKey); err != nil {
+		if strVal, err = parseRequiredArg(req, strKey); err != nil {
 			return nil, err
-		} else {
-			if val, err := strconv.Atoi(strVal); err != nil {
-				return nil, fmt.Errorf("The post argument %s should be an integer", strKey)
-			} else {
-				if val <= 0 {
-					return nil, fmt.Errorf("The post argument %s should be gretaer than 0", strKey)
-				}
-				result = append(result, val)
-			}
 		}
+		if val, err = strconv.Atoi(strVal); err != nil {
+			return nil, fmt.Errorf("The post argument %s should be an integer", strKey)
+		}
+		if val <= 0 {
+			return nil, fmt.Errorf("The post argument %s should be gretaer than 0", strKey)
+		}
+		result = append(result, val)
 	}
 	return result, nil
 }
 
 func parseStrings(req *http.Request, strKeys ...string) ([]string, error) {
 	result := make([]string, 0)
+	var strVal string
+	var err error
 	for _, strKey := range strKeys {
-		if strVal, err := parseRequiredArg(req, strKey); err != nil {
+		if strVal, err = parseRequiredArg(req, strKey); err != nil {
 			return nil, err
-		} else {
-			result = append(result, strVal)
 		}
+		if len(strVal) > MAX_STRING_LEN {
+			return nil, fmt.Errorf("The lenght for %s should lower than %d", strKey, MAX_STRING_LEN)
+		}
+		result = append(result, strVal)
 	}
 	return result, nil
 }

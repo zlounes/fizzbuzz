@@ -25,6 +25,13 @@ var (
 		String1: "fizz",
 		String2: "buzz",
 	}
+	TestWrongInput = config.FizzBuzzInput{
+		Int1:    3,
+		Int2:    -5,
+		Limit:   30,
+		String1: "fizz",
+		String2: "buzz",
+	}
 )
 
 type requestWriterMock struct {

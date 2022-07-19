@@ -24,7 +24,7 @@ func TestServer(t *testing.T) {
 		t.Fail()
 		return
 	}
-	if !checkStatus(resp, t) {
+	if !checkStatus(resp, t, http.StatusOK) {
 		return
 	}
 	if result, err = testutil.ReadResult(*resp); err != nil {
@@ -38,7 +38,7 @@ func TestServer(t *testing.T) {
 	}
 
 	resp, err = http.Get(getStatUrl())
-	if checkStatus(resp, t) {
+	if checkStatus(resp, t, http.StatusOK) {
 		return
 	}
 	result, _ = testutil.ReadResult(*resp)
@@ -58,6 +58,20 @@ func TestServer(t *testing.T) {
 	}
 }
 
+func TestError(t *testing.T) {
+	var resp *http.Response
+	var err error
+	data := testutil.BuildFormValues(testutil.TestWrongInput)
+
+	url := getPostUrl()
+	if resp, err = http.PostForm(url, data); err != nil {
+		t.Logf("Erreur calling %s : %v", url, err)
+		t.Fail()
+		return
+	}
+	checkStatus(resp, t, http.StatusBadRequest)
+
+}
 func getPostUrl() string {
 	return fmt.Sprintf("http://localhost:%s/fizzbuzz", getPort())
 }
@@ -74,9 +88,9 @@ func getPort() string {
 	return port
 }
 
-func checkStatus(resp *http.Response, t *testing.T) bool {
-	if resp.StatusCode != http.StatusOK {
-		t.Logf("Unexpected status : %d", resp.StatusCode)
+func checkStatus(resp *http.Response, t *testing.T, expected int) bool {
+	if resp.StatusCode != expected {
+		t.Logf("Unexpected status : %d expected %d", resp.StatusCode, expected)
 		t.Fail()
 		return false
 	}

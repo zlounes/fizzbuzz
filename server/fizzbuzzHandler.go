@@ -17,9 +17,9 @@ const (
     <label for="limit">limit:</label><br>
     <input type="text" id="limit" name="limit" value="30"><br>
     <label for="string1">string1:</label><br>
-    <input type="text" id="string1" name="string1" value="fizz"><br>
+    <input type="text" id="string1" name="string1" value="fizz" maxlength="50"><br>
     <label for="string2">string1:</label><br>
-    <input type="text" id="string2" name="string2" value="buzz"><br><br>
+    <input type="text" id="string2" name="string2" value="buzz" maxlength="50"><br><br>
     <input type="submit" value="Submit">
   </form>`
 )
